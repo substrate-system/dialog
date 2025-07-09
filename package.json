@@ -1,5 +1,5 @@
 {
-  "name": "@substrate-system/modal",
+  "name": "@substrate-system/dialog",
   "version": "0.0.2",
   "type": "module",
   "main": "dist/index.js",

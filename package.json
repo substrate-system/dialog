@@ -26,37 +26,38 @@
   },
   "scripts": {
     "lint": "eslint \"./**/*.{ts,js}\"",
-    "build-tests": "esbuild test/index.ts --target=es2020 --bundle --keep-names > test/test-bundle.js",
-    "test": "npm run lint && npm run build && npm run build-tests && npm run test-tape-run",
-    "test-tape-run": "cat test/index.html | tape-run --input=html --static=test | tap-spec",
+    "test": "esbuild --bundle ./test/index.ts | tapout",
     "build-cjs": "esbuild src/*.ts --format=cjs --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --out-extension:.js=.cjs --sourcemap",
     "build-esm": "esbuild src/*.ts --format=esm --metafile=dist/meta.json --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --sourcemap && tsc --emitDeclarationOnly --project tsconfig.build.json --outDir dist",
     "build-esm:min": "esbuild ./src/index.ts --format=esm --keep-names --bundle --tsconfig=tsconfig.build.json --minify --outfile=./dist/index.min.js && node ./build/minify.js ./dist",
     "build-example": "mkdir -p ./public && rm -rf ./public/* && vite --base=\"/modal\" build",
     "build-docs": "typedoc --tsconfig tsconfig.build.json ./src/index.ts",
-    "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm && npm run build-esm:min",
+    "build-css": "lightningcss --nesting src/index.css -o dist/index.css",
+    "build-css:min": "lightningcss --nesting --minify src/index.css -o dist/index.min.css",
+    "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm && npm run build-esm:min && npm run build-css && npm run build-css:min",
     "start": "vite",
     "preversion": "npm run lint",
     "version": "auto-changelog -p --template keepachangelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md",
     "postversion": "git push --follow-tags && npm publish",
     "prepublishOnly": "npm run build"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@substrate-system/debug": "^0.9.0",
-    "@substrate-system/dom": "^0.1.7",
-    "@bicycle-codes/tapzero": "^0.10.0",
+    "@substrate-system/debug": "^0.9.49",
+    "@substrate-system/dom": "^0.1.13",
+    "@substrate-system/tapout": "^0.0.33",
+    "@substrate-system/tapzero": "^0.10.16",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "auto-changelog": "^2.5.0",
     "esbuild": "^0.27.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
+    "lightningcss": "^1.30.2",
+    "lightningcss-cli": "^1.30.2",
     "postcss": "^8.5.2",
     "postcss-cli": "^11.0.0",
     "postcss-nesting": "^13.0.1",
     "tap-spec": "^5.0.0",
-    "tape-run": "^11.0.0",
     "typedoc": "^0.28.1",
     "typescript": "^5.7.3",
     "vite": "^7.1.3"
@@ -79,5 +80,8 @@
   "bugs": {
     "url": "https://github.com/nichoth/modal/issues"
   },
-  "homepage": "https://github.com/nichoth/modal"
+  "homepage": "https://github.com/nichoth/modal",
+  "dependencies": {
+    "@substrate-system/web-component": "^0.0.38"
+  }
 }

@@ -1,4 +1,12 @@
-modal-window {
-    /* hide the close button */
-    /* --cta-modal-close-display: none; */
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    min-height: 200vh;
+
+    &.reduce-fouce {
+        opacity: 0;
+    }
+}
+
+button {
+    cursor: pointer;
 }

@@ -6,33 +6,36 @@
     <link rel="stylesheet" href="/style.css">
     <title>Example</title>
 </head>
-<body>
-    <modal-window>
-      <div slot="button">
-        <p>
-          <button
-            class="cta-modal-toggle"
-            type="button"
-          >Open modal</button>
-        </p>
-      </div>
-      <div slot="modal">modal content?</div>
-      <div slot="modal">more modal content</div>
+
+<body class="reduce-fouce">
+    <h1>Modal Window Examples</h1>
+
+    <h2>Basic Modal</h2>
+    <button id="open-modal" type="button">Open modal</button>
+
+    <modal-window id="my-modal">
+        <h2>Modal Title</h2>
+        <p>This is the modal content.</p>
+        <p>Click the X, press Escape, or click outside to close.</p>
     </modal-window>
 
-    <modal-window closable="false">
-      <div slot="button">
+    <hr>
+
+    <h2>Unclosable Modal</h2>
+    <button id="open-unclosable" type="button">Open unclosable modal</button>
+
+    <modal-window closable="false" id="unclosable-modal">
+        <h2>Unclosable Modal</h2>
         <p>
-          <button
-            class="cta-modal-toggle"
-            type="button"
-          >Open a modal that you can't close</button>
+            This modal cannot be closed with the X button,
+            Escape key, or clicking outside.
         </p>
-      </div>
-      <div slot="modal">modal content?</div>
-      <div slot="modal">more modal content</div>
+        <p>You must use JavaScript to close it.</p>
+        <button id="close-from-inside" type="button">
+            Close this modal
+        </button>
     </modal-window>
 
     <script type="module" src="./index.ts"></script>
-  </body>
+</body>
 </html>

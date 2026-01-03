@@ -22,6 +22,7 @@ See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-
 - [Install](#install)
 - [Use](#use)
   * [FOUCE](#fouce)
+  * [CSS](#css)
   * [Bundler](#bundler)
   * [HTML only](#html-only)
 - [API](#api)

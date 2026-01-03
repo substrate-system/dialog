@@ -1,7 +1,5 @@
 import { test } from '@substrate-system/tapzero'
-import {
-    assertNoViolations
-} from '@substrate-system/tapout/axe'
+import { assertNoViolations } from '@substrate-system/tapout/axe'
 import { waitFor } from '@substrate-system/dom'
 import { ModalWindow } from '../src/index.js'
 
@@ -28,6 +26,7 @@ test('basics', async t => {
 })
 
 test('accessibility - closed modal', async t => {
+    document.documentElement.setAttribute('lang', 'en')
     document.body.innerHTML = `
         <main>
             <h1>Page Title</h1>
@@ -44,6 +43,7 @@ test('accessibility - closed modal', async t => {
 })
 
 test('accessibility - open modal', async t => {
+    document.documentElement.setAttribute('lang', 'en')
     document.body.innerHTML = `
         <main>
             <h1>Page Title</h1>
@@ -63,4 +63,9 @@ test('accessibility - open modal', async t => {
     await new Promise(resolve => setTimeout(resolve, 100))
 
     await assertNoViolations(t)
+})
+
+test('all done', () => {
+    // @ts-expect-error tests
+    window.testsFinished = true
 })

@@ -1,34 +1,38 @@
 # modal
-![tests](https://github.com/nichoth/modal/actions/workflows/nodejs.yml/badge.svg)
-[![types](https://img.shields.io/npm/types/@nichoth/modal?style=flat-square)](README.md)
+[![tests](https://img.shields.io/github/actions/workflow/status/substrate-system/route-event/nodejs.yml?style=flat-square)](https://github.com/substrate-system/route-event/actions/workflows/nodejs.yml)
+[![types](https://img.shields.io/npm/types/@substrate-system/modal?style=flat-square)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
 [![semantic versioning](https://img.shields.io/badge/semver-2.0.0-blue?logo=semver&style=flat-square)](https://semver.org/)
-[![dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg?style=flat-square)](package.json)
-[![license](https://img.shields.io/badge/license-Polyform_Non_Commercial-26bc71?style=flat-square)](LICENSE)
+[![Common Changelog](https://nichoth.github.io/badge/common-changelog.svg)](https://common-changelog.org)
+[![license](https://img.shields.io/badge/license-Big_Time-blue?style=flat-square)](LICENSE)
 
 
 Modal dialog window
 
 See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-modal-build-web-component/) and [nathansmith/cta-modal](https://github.com/nathansmith/cta-modal/tree/main).
 
-## demo
+<details><summary><h2>Contents</h2></summary>
+<!-- toc -->
+</details>
 
-See [nichoth.github.io/modal](https://nichoth.github.io/modal/).
+## Demo
 
-## install
+See [substrate-system.github.io/modal](https://substrate-system.github.io/modal/).
+
+## Install
 
 ```sh
-npm i -S @nichoth/modal
+npm i -S @substrate-system/modal
 ```
 
-## use
+## Use
 
-### bundler
+### Bundler
 
 Just import; this calls the global function `window.customElements.define`.
 
 ```js
-import '@nichoth/modal'
+import '@substrate-system/modal'
 ```
 
 Then use the tag in HTML:
@@ -53,7 +57,7 @@ Then use the tag in HTML:
 First copy the file to a location accessible to your web server.
 
 ```sh
-cp ./node_modules/@nichoth/modal/dist/index.min.js ./public/modal.js
+cp ./node_modules/@substrate-system/modal/dist/index.min.js ./public/modal.js
 ```
 
 Then link to the file in HTML

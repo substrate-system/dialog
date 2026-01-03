@@ -27,6 +27,7 @@ declare global {
 const ACTIVE = 'active'
 const ANIMATED = 'animated'
 const ANIMATION_DURATION = 250
+const ARIA_DESCRIBEDBY = 'aria-describedby'
 const ARIA_LABEL = 'aria-label'
 const CLOSE = 'close'
 const CLOSE_TITLE = 'Close'
@@ -83,6 +84,7 @@ export class ModalWindow extends HTMLElement {
     _activeElement:HTMLElement|null = null
     _isActive = false
     _isAnimated = true
+    _isBuilt = false
     _isHideShow = false
     _isStatic = false
     _timerForHide:number|undefined
@@ -96,43 +98,14 @@ export class ModalWindow extends HTMLElement {
 
     constructor () {
         super()
-
-        // Bind context.
         this._bind()
-
-        this._closable = this.getAttribute('closable') !== 'false'
-        this._showIcon = !this.hasAttribute(NO_ICON)
-
-        // Get heading for aria-label.
-        this._heading = this.querySelector('h1, h2, h3, h4, h5, h6')
-
-        // Collect all child nodes.
-        const contentNodes = Array.from(this.childNodes)
-
-        // Build the modal structure.
-        this._buildModal(contentNodes)
-
-        // Set animation flag.
-        this._setAnimationFlag()
-
-        // Set close title.
-        this._setCloseTitle()
-
-        // Set modal label.
-        this._setModalLabel()
-
-        // Set static flag.
-        this._setStaticFlag()
-
-        // Set active flag.
-        this._setActiveFlag()
     }
 
     // ============================
     // Helper: build modal structure.
     // ============================
 
-    _buildModal (contentNodes: Node[]) {
+    _buildModal (contentNodes:Node[]) {
         // Create focus trap
         const createFocusTrap = () => {
             const trap = document.createElement('span')
@@ -201,7 +174,7 @@ export class ModalWindow extends HTMLElement {
     // ============================
 
     static get observedAttributes () {
-        return [ACTIVE, ANIMATED, CLOSE, STATIC]
+        return [ACTIVE, ANIMATED, ARIA_DESCRIBEDBY, CLOSE, STATIC]
     }
 
     // ==============================
@@ -221,6 +194,11 @@ export class ModalWindow extends HTMLElement {
                 this._setAnimationFlag()
             }
 
+            // Changed [aria-describedby="…"] value?
+            if (name === ARIA_DESCRIBEDBY) {
+                this._setModalDescription()
+            }
+
             // Changed [close="…"] value?
             if (name === CLOSE) {
                 this._setCloseTitle()
@@ -238,6 +216,41 @@ export class ModalWindow extends HTMLElement {
     // ===========================
 
     connectedCallback () {
+        // Build modal structure once.
+        if (!this._isBuilt) {
+            this._closable = this.getAttribute('closable') !== 'false'
+            this._showIcon = !this.hasAttribute(NO_ICON)
+
+            // Get heading for aria-label.
+            this._heading = this.querySelector('h1, h2, h3, h4, h5, h6')
+
+            // Collect all child nodes.
+            const contentNodes = Array.from(this.childNodes)
+
+            // Build the modal structure.
+            this._buildModal(contentNodes)
+
+            // Set animation flag.
+            this._setAnimationFlag()
+
+            // Set close title.
+            this._setCloseTitle()
+
+            // Set modal label.
+            this._setModalLabel()
+
+            // Set modal description.
+            this._setModalDescription()
+
+            // Set static flag.
+            this._setStaticFlag()
+
+            // Set active flag.
+            this._setActiveFlag()
+
+            this._isBuilt = true
+        }
+
         this._addEvents()
     }
 
@@ -343,6 +356,22 @@ export class ModalWindow extends HTMLElement {
         // Set label.
         if (this._modal) {
             this._modal.setAttribute(ARIA_LABEL, label)
+        }
+    }
+
+    // ==============================
+    // Helper: set modal description.
+    // ==============================
+
+    _setModalDescription () {
+        if (!this._modal) return
+
+        const describedBy = this.getAttribute(ARIA_DESCRIBEDBY)
+
+        if (describedBy) {
+            this._modal.setAttribute(ARIA_DESCRIBEDBY, describedBy)
+        } else {
+            this._modal.removeAttribute(ARIA_DESCRIBEDBY)
         }
     }
 

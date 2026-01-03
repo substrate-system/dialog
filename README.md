@@ -9,7 +9,7 @@
 [![license](https://img.shields.io/badge/license-Big_Time-blue?style=flat-square)](LICENSE)
 
 
-Modal dialog window
+Modal/dialog window.
 
 See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-modal-build-web-component/) and [nathansmith/cta-modal](https://github.com/nathansmith/cta-modal/tree/main).
 
@@ -27,6 +27,7 @@ See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-
 - [API](#api)
   * [Attributes](#attributes)
   * [Methods](#methods)
+- [Accessibility](#accessibility)
 - [Example](#example)
 - [credits](#credits)
 
@@ -233,10 +234,61 @@ Closes the modal and returns focus to the previously focused element.
 modal.close()
 ```
 
+## Accessibility
+
+Things handled by this library:
+
+* `role="dialog"` and `aria-modal="true"` on the dialog
+* Focus trapping (Tab cycles within modal)
+* Escape key closes the modal (when `closable`)
+* Focus returns to the trigger element on close
+* Close button has `aria-label`
+* Respects `prefers-reduced-motion`
+
+### Things You Need To Do
+
+### Include a heading
+
+The component extracts text from the first heading (h1-h6) to use as the
+dialog's `aria-label`. Always include a descriptive heading:
+
+```html
+<!-- Good: heading text becomes the aria-label -->
+<modal-window>
+    <h2>Edit Profile</h2>
+    <p>Update your information below.</p>
+</modal-window>
+
+<!-- Avoid: no heading results in aria-label="modal" -->
+<modal-window>
+    <p>Some content without a heading...</p>
+</modal-window>
+```
+
+### Adding a description
+
+For modals with important supplementary text (like warnings), you can
+add `aria-describedby`. This library will handle an `aria-describedby` attribute
+correctly, meaning that it will be forwarded to the correct element.
+
+```html
+<modal-window aria-describedby="delete-warning" id="confirm-delete">
+    <h2>Delete Account</h2>
+    <p id="delete-warning">
+        This action cannot be undone.
+    </p>
+    <button type="button">Cancel</button>
+    <button type="button">Delete</button>
+</modal-window>
+```
+
 ## Example
 
 [See `./example`](./example/).
 
-## credits
+## Credits
 
-Thanks [@nathansmith](https://github.com/nathansmith) and [Smashing Magazine](https://www.smashingmagazine.com/2022/04/cta-modal-build-web-component/) for publishing this originally.
+Thanks
+[@nathansmith](https://github.com/nathansmith) and
+[Smashing Magazine](https://www.smashingmagazine.com/2022/04/cta-modal-build-web-component/)
+for publishing this originally.

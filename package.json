@@ -75,15 +75,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nichoth/modal.git"
+    "url": "git+https://github.com/substrate-system/dialog.git"
   },
   "keywords": [
     "modal",
     "web",
-    "component"
+    "component",
+    "dialog"
   ],
   "bugs": {
-    "url": "https://github.com/nichoth/modal/issues"
+    "url": "https://github.com/substrate-system/dialog/issues"
   },
-  "homepage": "https://github.com/nichoth/modal"
+  "homepage": "https://github.com/substrate-system/dialog"
 }

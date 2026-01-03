@@ -15,6 +15,7 @@ test('basics', async t => {
 
     const el = await waitFor('modal-window') as ModalWindow
     t.ok(el, 'should find an element')
+    t.ok(el instanceof ModalWindow)
 
     // Test open/close methods
     el.open()

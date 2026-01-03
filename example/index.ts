@@ -33,3 +33,14 @@ document.getElementById('open-unclosable')?.addEventListener('click', () => {
 document.getElementById('close-from-inside')?.addEventListener('click', () => {
     unclosableModal.close()
 })
+
+// Styled modal (Edit Profile)
+const styledModal = document.getElementById('modal-with-style') as ModalWindow
+
+document.getElementById('open-styled')?.addEventListener('click', () => {
+    styledModal.open()
+})
+
+document.getElementById('cancel-profile')?.addEventListener('click', () => {
+    styledModal.close()
+})

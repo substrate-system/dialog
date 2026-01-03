@@ -36,6 +36,49 @@
         </button>
     </modal-window>
 
+    <h2>Modal With Style</h2>
+    <p>
+        This is an example of more realistic style in a modal window.
+        There is no "slot" API here. Things like a close button are part
+        of the modal's children, and you would need to handle events in
+        your application code.
+    </p>
+    <button id="open-styled" type="button">Open styled modal</button>
+
+    <modal-window id="modal-with-style" class="edit-profile-modal" no-icon>
+        <header class="modal-header">
+            <button type="button" class="cancel-btn" id="cancel-profile">Cancel</button>
+            <h3 class="modal-title">Edit profile</h3>
+            <button type="button" class="save-btn" disabled>Save</button>
+        </header>
+
+        <div class="modal-body">
+            <div class="avatar-section">
+                <div class="avatar">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="64" height="64">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M12 14c-6 0-8 3-8 6v2h16v-2c0-3-2-6-8-6z" />
+                    </svg>
+                    <button type="button" class="avatar-edit-btn" aria-label="Change avatar">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                            <path d="M12 15.2c1.8 0 3.2-1.4 3.2-3.2S13.8 8.8 12 8.8 8.8 10.2 8.8 12s1.4 3.2 3.2 3.2zM9 2L7.2 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.2L15 2H9z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="display-name">Display name</label>
+                <input type="text" id="display-name" value="abc123">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="4">Hello world...</textarea>
+            </div>
+        </div>
+    </modal-window>
+
     <script type="module" src="./index.ts"></script>
 </body>
 </html>

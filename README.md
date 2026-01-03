@@ -84,13 +84,12 @@ Then link to the file in HTML
 
 ## API
 
-### attributes
+### Attributes
 
 See [nathansmith/cta-modal](https://github.com/nathansmith/cta-modal/tree/main?tab=readme-ov-file#how-to-use-extras)
 
-#### Plus
 
-##### closable
+#### Closable
 
 Take an attribute `closable`. If you pass in `closable="false"`, then it will
 render without a 'close' button, and escape key and clicks will not close the
@@ -98,7 +97,7 @@ modal. You would need to open/close it via your application state.
 
 ```html
 <modal-window closable="false">
-    <div slot="button">
+    <div>
         <p>
             <button
                 class="cta-modal-toggle"
@@ -108,12 +107,12 @@ modal. You would need to open/close it via your application state.
             </button>
         </p>
     </div>
-    <div slot="modal">modal content?</div>
-    <div slot="modal">more modal content</div>
+    <div>modal content?</div>
+    <div>more modal content</div>
 </modal-window>
 ```
 
-## example
+## Example
 
 [See `./example`](./example/).
 

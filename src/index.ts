@@ -30,6 +30,7 @@ const ANIMATION_DURATION = 250
 const ARIA_LABEL = 'aria-label'
 const CLOSE = 'close'
 const CLOSE_TITLE = 'Close'
+const NO_ICON = 'no-icon'
 const DATA_HIDE = 'data-modal-hide'
 const DATA_SHOW = 'data-modal-show'
 const DATA_VISIBLE = 'data-visible'
@@ -87,6 +88,7 @@ export class ModalWindow extends HTMLElement {
     _timerForHide:number|undefined
     _timerForShow:number|undefined
     _closable:boolean = true
+    _showIcon:boolean = true
 
     // =======================
     // Lifecycle: constructor.
@@ -99,6 +101,7 @@ export class ModalWindow extends HTMLElement {
         this._bind()
 
         this._closable = this.getAttribute('closable') !== 'false'
+        this._showIcon = !this.hasAttribute(NO_ICON)
 
         // Get heading for aria-label.
         this._heading = this.querySelector('h1, h2, h3, h4, h5, h6')
@@ -157,8 +160,8 @@ export class ModalWindow extends HTMLElement {
         dialog.tabIndex = -1
         this._modal = dialog
 
-        // Create close button if closable
-        if (this._closable) {
+        // Create close button if closable and icon should be shown
+        if (this._closable && this._showIcon) {
             const closeBtn = document.createElement('button')
             closeBtn.setAttribute('data-modal-close', '')
             closeBtn.type = 'button'

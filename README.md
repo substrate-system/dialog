@@ -11,6 +11,7 @@ Modal dialog window
 
 See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-modal-build-web-component/) and [nathansmith/cta-modal](https://github.com/nathansmith/cta-modal/tree/main).
 
+
 <details><summary><h2>Contents</h2></summary>
 
 <!-- toc -->
@@ -41,9 +42,54 @@ npm i -S @substrate-system/modal
 
 ## Use
 
+### FOUCE
+
+>
+> [!NOTE]  
+> You should prevent the flash of undefined custom elements, because
+> the modal content should be hidden from the user until it is opened.
+> See [abeautifulsite.net](https://www.abeautifulsite.net/posts/revisiting-fouce).
+>
+
+In the example, we have:
+
+```ts
+import { ModalWindow } from '@substrate-system/dialog'
+
+(async () => {
+    await Promise.race([
+        // Load all custom elements
+        Promise.allSettled([
+            customElements.whenDefined(ModalWindow.TAG),  // modal-window
+        ]),
+        // Resolve after two seconds
+        new Promise(resolve => setTimeout(resolve, 2000))
+    ])
+
+    // Remove the class, showing the page content
+    document.body.classList.remove('reduce-fouce')
+})()
+```
+
+And the HTML has a class `reduce-fouce`:
+
+```html
+<body class="reduce-fouce">
+```
+
+The CSS:
+
+```css
+body {
+    &.reduce-fouce {
+        opacity: 0;
+    }
+}
+```
+
 ### Bundler
 
-Just import; this calls the global function `window.customElements.define`.
+Just import. This calls the global function `window.customElements.define`.
 
 ```js
 import '@substrate-system/modal'

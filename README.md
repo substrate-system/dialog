@@ -19,11 +19,12 @@ See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-
 - [Demo](#demo)
 - [Install](#install)
 - [Use](#use)
+  * [FOUCE](#fouce)
   * [Bundler](#bundler)
   * [HTML only](#html-only)
 - [API](#api)
-  * [attributes](#attributes)
-- [example](#example)
+  * [Attributes](#attributes)
+- [Example](#example)
 - [credits](#credits)
 
 <!-- tocstop -->

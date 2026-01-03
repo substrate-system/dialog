@@ -12,7 +12,21 @@ Modal dialog window
 See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-modal-build-web-component/) and [nathansmith/cta-modal](https://github.com/nathansmith/cta-modal/tree/main).
 
 <details><summary><h2>Contents</h2></summary>
+
 <!-- toc -->
+
+- [Demo](#demo)
+- [Install](#install)
+- [Use](#use)
+  * [Bundler](#bundler)
+  * [HTML only](#html-only)
+- [API](#api)
+  * [attributes](#attributes)
+- [example](#example)
+- [credits](#credits)
+
+<!-- tocstop -->
+
 </details>
 
 ## Demo

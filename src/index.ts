@@ -639,6 +639,4 @@ export class ModalWindow extends HTMLElement {
     }
 }
 
-console.log('Defining modal-window...')
 define(ModalWindow.TAG, ModalWindow)
-console.log('modal-window defined')

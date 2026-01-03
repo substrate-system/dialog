@@ -1,6 +1,6 @@
-# modal
-[![tests](https://img.shields.io/github/actions/workflow/status/substrate-system/route-event/nodejs.yml?style=flat-square)](https://github.com/substrate-system/route-event/actions/workflows/nodejs.yml)
-[![types](https://img.shields.io/npm/types/@substrate-system/modal?style=flat-square)](README.md)
+# dialog
+[![tests](https://img.shields.io/github/actions/workflow/status/substrate-system/dialog/nodejs.yml?style=flat-square)](https://github.com/substrate-system/dialog/actions/workflows/nodejs.yml)
+[![types](https://img.shields.io/npm/types/@substrate-system/dialog?style=flat-square)](README.md)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
 [![semantic versioning](https://img.shields.io/badge/semver-2.0.0-blue?logo=semver&style=flat-square)](https://semver.org/)
 [![Common Changelog](https://nichoth.github.io/badge/common-changelog.svg)](https://common-changelog.org)
@@ -26,6 +26,7 @@ See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-
   * [HTML only](#html-only)
 - [API](#api)
   * [Attributes](#attributes)
+  * [Methods](#methods)
 - [Example](#example)
 - [credits](#credits)
 
@@ -40,7 +41,7 @@ See [substrate-system.github.io/modal](https://substrate-system.github.io/modal/
 ## Install
 
 ```sh
-npm i -S @substrate-system/modal
+npm i -S @substrate-system/dialog
 ```
 
 ## Use
@@ -48,7 +49,7 @@ npm i -S @substrate-system/modal
 ### FOUCE
 
 >
-> [!NOTE]  
+> [!NOTE]
 > You should prevent the flash of undefined custom elements, because
 > the modal content should be hidden from the user until it is opened.
 > See [abeautifulsite.net](https://www.abeautifulsite.net/posts/revisiting-fouce).
@@ -95,24 +96,29 @@ body {
 Just import. This calls the global function `window.customElements.define`.
 
 ```js
-import '@substrate-system/modal'
+import '@substrate-system/dialog'
 ```
 
 Then use the tag in HTML:
 
 ```html
-<modal-window>
-    <div slot="button">
-        <p>
-            <button class="cta-modal-toggle" type="button">
-                Open modal
-            </button>
-        </p>
-    </div>
+<button id="open-modal" type="button">Open modal</button>
 
-    <div slot="modal">modal content?</div>
-    <div slot="modal">more modal content</div>
+<modal-window id="my-modal">
+    <h2>Modal Title</h2>
+    <p>This is the modal content.</p>
+    <p>Click the X, press Escape, or click outside to close.</p>
 </modal-window>
+```
+
+Open/close via JavaScript:
+
+```js
+const modal = document.getElementById('my-modal')
+
+document.getElementById('open-modal').addEventListener('click', () => {
+    modal.open()
+})
 ```
 
 ### HTML only
@@ -120,14 +126,14 @@ Then use the tag in HTML:
 First copy the file to a location accessible to your web server.
 
 ```sh
-cp ./node_modules/@substrate-system/modal/dist/index.min.js ./public/modal.js
+cp ./node_modules/@substrate-system/dialog/dist/index.min.js ./public/dialog.js
 ```
 
 Then link to the file in HTML
 ```html
 <body>
     <p>...content...</p>
-    <script type="module" src="/modal.js"></script>
+    <script type="module" src="/dialog.js"></script>
 </body>
 ```
 
@@ -135,30 +141,96 @@ Then link to the file in HTML
 
 ### Attributes
 
-See [nathansmith/cta-modal](https://github.com/nathansmith/cta-modal/tree/main?tab=readme-ov-file#how-to-use-extras)
+#### `active`
 
+Controls whether the modal is open. Set to `"true"` to open, `"false"` or remove the attribute to close.
 
-#### Closable
+```js
+modal.setAttribute('active', 'true')   // open
+modal.setAttribute('active', 'false')  // close
+modal.removeAttribute('active')        // close
+```
 
-Take an attribute `closable`. If you pass in `closable="false"`, then it will
-render without a 'close' button, and escape key and clicks will not close the
-modal. You would need to open/close it via your application state.
+#### `closable`
+
+Set to `"false"` to prevent the modal from being closed via the close button, Escape key, or clicking outside. You must close it programmatically. Defaults to `true`.
 
 ```html
 <modal-window closable="false">
-    <div>
-        <p>
-            <button
-                class="cta-modal-toggle"
-                type="button"
-            >
-                Open a modal that can't be closed
-            </button>
-        </p>
-    </div>
-    <div>modal content?</div>
-    <div>more modal content</div>
+    <h2>Unclosable Modal</h2>
+    <p>This modal cannot be closed with the X button, Escape key, or clicking outside.</p>
+    <button id="close-btn" type="button">Close this modal</button>
 </modal-window>
+```
+
+```js
+document.getElementById('close-btn').addEventListener('click', () => {
+    modal.close()
+})
+```
+
+#### `no-icon`
+
+Hides the close button icon. Useful when you want to provide your own close UI.
+
+```html
+<modal-window no-icon>
+    <header>
+        <button type="button" id="cancel">Cancel</button>
+        <h3>Edit profile</h3>
+        <button type="button" id="save">Save</button>
+    </header>
+    <div>...form content...</div>
+</modal-window>
+```
+
+#### `animated`
+
+Controls whether open/close animations are used. Set to `"false"` to disable. Defaults to `true`. Animations also respect `prefers-reduced-motion`.
+
+```html
+<modal-window animated="false">
+    <p>No animation</p>
+</modal-window>
+```
+
+#### `static`
+
+When set to `"true"`, clicking outside the modal does not close it. The Escape key and close button still work (unless `closable="false"`).
+
+```html
+<modal-window static="true">
+    <p>Click outside won't close this</p>
+</modal-window>
+```
+
+#### `close`
+
+Sets the title/aria-label for the close button. Defaults to "Close".
+
+```html
+<modal-window close="Dismiss">
+    <p>Close button will have title "Dismiss"</p>
+</modal-window>
+```
+
+### Methods
+
+#### `open()`
+
+Opens the modal and focuses it.
+
+```js
+const modal = document.querySelector('modal-window')
+modal.open()
+```
+
+#### `close()`
+
+Closes the modal and returns focus to the previously focused element.
+
+```js
+modal.close()
 ```
 
 ## Example

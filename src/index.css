@@ -93,8 +93,14 @@
 }
 
 [data-modal-dialog] {
+    /* Override native <dialog> defaults */
+    display: block;
+    border: none;
+    max-width: none;
+    max-height: none;
+
     background-color: var(--modal-dialog-background-color, #fff);
-    border-radius: var(--modal-dialog-border-radius, 5px);
+    border-radius: var(--modal-dialog-border-radius, 0);
     box-shadow: var(--modal-dialog-box-shadow, 0 2px 5px 0 rgba(0, 0, 0, 0.5));
 
     padding-top: var(--modal-dialog-padding-top, 20px);

@@ -70,7 +70,7 @@ const FOCUSABLE_SELECTORS = [
 export class ModalWindow extends HTMLElement {
     // Element references (set during build).
     _buttonClose:HTMLButtonElement|null = null
-    _modal:HTMLDivElement|null = null
+    _modal:HTMLDialogElement|null = null
     _modalOverlay:HTMLDivElement|null = null
     _modalScroll:HTMLDivElement|null = null
     _modalContent:HTMLDivElement|null = null
@@ -126,10 +126,9 @@ export class ModalWindow extends HTMLElement {
         this._modalOverlay = overlay
 
         // Create dialog
-        const dialog = document.createElement('div')
+        const dialog = document.createElement('dialog')
         dialog.setAttribute('aria-modal', 'true')
         dialog.setAttribute('data-modal-dialog', '')
-        dialog.setAttribute('role', 'dialog')
         dialog.tabIndex = -1
         this._modal = dialog
 

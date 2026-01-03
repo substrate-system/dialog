@@ -95,6 +95,48 @@ body {
 }
 ```
 
+### CSS
+
+Customize the CSS with some variables.
+
+```css
+:root {
+    /* Overlay */
+    --modal-overlay-z-index: 100000;
+    --modal-overlay-background-color: rgba(0, 0, 0, 0.5);
+    --modal-overlay-padding-top: 20px;
+    --modal-overlay-padding-left: 20px;
+    --modal-overlay-padding-right: 20px;
+    --modal-overlay-padding-bottom: 20px;
+
+    /* Dialog */
+    --modal-dialog-background-color: #fff;
+    --modal-dialog-border-radius: 0;
+    --modal-dialog-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+    --modal-dialog-padding-top: 20px;
+    --modal-dialog-padding-left: 20px;
+    --modal-dialog-padding-right: 20px;
+    --modal-dialog-padding-bottom: 20px;
+    --modal-dialog-width: 500px;
+
+    /* Close button */
+    --modal-close-color: #fff;
+    --modal-close-background-color: #000;
+    --modal-close-border-radius: 50%;
+    --modal-close-box-shadow: 0 0 0 1px #fff;
+    --modal-close-display: block;
+    --modal-close-font-family: 'Arial', sans-serif;
+    --modal-close-font-size: 23px;
+    --modal-close-line-height: 26px;
+    --modal-close-width: 26px;
+
+    /* Close button hover/focus */
+    --modal-close-color-hover: #000;
+    --modal-close-background-color-hover: #fff;
+    --modal-close-box-shadow-hover: 0 0 0 1px #000;
+}
+```
+
 ### Bundler
 
 Just import. This calls the global function `window.customElements.define`.

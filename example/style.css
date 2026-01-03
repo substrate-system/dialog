@@ -17,7 +17,6 @@ button {
 .edit-profile-modal {
     --modal-width: 500px;
     --modal-padding: 0;
-    --modal-border-radius: 12px;
 }
 
 .edit-profile-modal .modal-header {
@@ -121,7 +120,6 @@ button {
     padding: 12px;
     font-size: 15px;
     border: none;
-    border-radius: 8px;
     background: #f3f3f8;
     box-sizing: border-box;
     font-family: inherit;

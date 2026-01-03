@@ -30,7 +30,7 @@
     "build-cjs": "esbuild src/*.ts --format=cjs --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --out-extension:.js=.cjs --sourcemap",
     "build-esm": "esbuild src/*.ts --format=esm --metafile=dist/meta.json --keep-names --tsconfig=tsconfig.build.json --outdir=./dist --sourcemap && tsc --emitDeclarationOnly --project tsconfig.build.json --outDir dist",
     "build-esm:min": "esbuild ./src/index.ts --format=esm --keep-names --bundle --tsconfig=tsconfig.build.json --minify --outfile=./dist/index.min.js && node ./build/minify.js ./dist",
-    "build-example": "mkdir -p ./public && rm -rf ./public/* && vite --base=\"/modal\" build",
+    "build-example": "mkdir -p ./public && rm -rf ./public/* && vite --base=\"/dialog\" build",
     "build-docs": "typedoc --tsconfig tsconfig.build.json ./src/index.ts",
     "build-css": "lightningcss --nesting src/index.css -o dist/index.css",
     "build-css:min": "lightningcss --nesting --minify src/index.css -o dist/index.min.css",

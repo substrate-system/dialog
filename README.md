@@ -28,8 +28,11 @@ See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-
   * [Attributes](#attributes)
   * [Methods](#methods)
 - [Accessibility](#accessibility)
+  * [Things You Need To Do](#things-you-need-to-do)
+  * [Include a heading](#include-a-heading)
+  * [Adding a description](#adding-a-description)
 - [Example](#example)
-- [credits](#credits)
+- [Credits](#credits)
 
 <!-- tocstop -->
 

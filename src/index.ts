@@ -109,7 +109,6 @@ export class ModalWindow extends HTMLElement {
         // Create focus trap
         const createFocusTrap = () => {
             const trap = document.createElement('span')
-            trap.setAttribute('aria-hidden', 'true')
             trap.setAttribute('data-modal-focus-trap', '')
             trap.tabIndex = 0
             return trap

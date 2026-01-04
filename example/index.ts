@@ -34,6 +34,13 @@ document.getElementById('close-from-inside')?.addEventListener('click', () => {
     unclosableModal.close()
 })
 
+// Noclick modal
+const noclickModal = document.getElementById('noclick-modal') as ModalWindow
+
+document.getElementById('open-noclick')?.addEventListener('click', () => {
+    noclickModal.open()
+})
+
 // Styled modal (Edit Profile)
 const styledModal = document.getElementById('modal-with-style') as ModalWindow
 

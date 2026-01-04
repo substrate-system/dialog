@@ -251,6 +251,16 @@ When set to `"true"`, clicking outside the modal does not close it. The Escape k
 </modal-window>
 ```
 
+#### `noclick`
+
+When present, clicking the backdrop does not close the modal. Unlike `static`, this is a boolean attribute (no value needed). The Escape key and close button still work.
+
+```html
+<modal-window noclick>
+    <p>Clicking the backdrop won't close this</p>
+</modal-window>
+```
+
 #### `close`
 
 Sets the title/aria-label for the close button. Defaults to "Close".

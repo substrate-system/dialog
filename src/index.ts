@@ -42,6 +42,7 @@ const FOCUSIN = 'focusin'
 const HIDDEN = 'hidden'
 const KEYDOWN = 'keydown'
 const MODAL_LABEL_FALLBACK = 'modal'
+const NOCLICK = 'noclick'
 const PREFERS_REDUCED_MOTION = '(prefers-reduced-motion: reduce)'
 const SPACE = ' '
 const SPACE_REGEX = /\s+/g
@@ -91,6 +92,7 @@ export class ModalWindow extends HTMLElement {
     _timerForShow:number|undefined
     _closable:boolean = true
     _showIcon:boolean = true
+    _noClick:boolean = false
 
     // =======================
     // Lifecycle: constructor.
@@ -218,6 +220,7 @@ export class ModalWindow extends HTMLElement {
         if (!this._isBuilt) {
             this._closable = this.getAttribute('closable') !== 'false'
             this._showIcon = !this.hasAttribute(NO_ICON)
+            this._noClick = this.hasAttribute(NOCLICK)
 
             // Get heading for aria-label.
             this._heading = this.querySelector('h1, h2, h3, h4, h5, h6')
@@ -560,7 +563,7 @@ export class ModalWindow extends HTMLElement {
     // =====================
 
     _handleClickOverlay (event: MouseEvent) {
-        if (this._isHideShow || this._isStatic) return
+        if (this._isHideShow || this._isStatic || this._noClick) return
         if (!this._closable) return
 
         // Get layer.

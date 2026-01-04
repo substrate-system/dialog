@@ -36,12 +36,49 @@
         </button>
     </modal-window>
 
+    <hr>
+
+    <h2>No Backdrop Click</h2>
+    <p></p>
+    <pre>
+<code>
+&lt;modal-window noclick&gt;Example&lt;/modal-window&gt;
+</code>
+    </pre>
+
+    <p>
+        This dialog will not close if you click outside of the dialog element,
+        but will close by any other standard method.
+    </p>
+
+    <button id="open-noclick" type="button">
+        Open noclick modal
+    </button>
+
+    <modal-window id="noclick-modal" noclick>
+        <h2>No Backdrop Click Modal</h2>
+        <p>
+            Clicking the backdrop will not close this modal.
+        </p>
+        <p>
+            You can still close it with the X button or the Escape key.
+        </p>
+    </modal-window>
+
+    <hr>
+
     <h2>Modal With Style</h2>
     <p>
         This is an example of more realistic style in a modal window.
         There is no "slot" API here. Things like a close button are part
         of the modal's children, and you would need to handle events in
         your application code.
+    </p>
+
+    <p>
+        This example uses the attribute <code>no-icon</code>, which renders
+        a dialog window with no close "x" icon, but the dialog will still
+        respond to the escape key or clicks off of the modal to close.
     </p>
     <button id="open-styled" type="button">Open styled modal</button>
 

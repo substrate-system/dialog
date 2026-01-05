@@ -83,11 +83,6 @@
     align-items: center;
     justify-content: center;
 
-    padding-top: var(--modal-overlay-padding-top, 20px);
-    padding-left: var(--modal-overlay-padding-left, 20px);
-    padding-right: var(--modal-overlay-padding-right, 20px);
-    padding-bottom: var(--modal-overlay-padding-bottom, 20px);
-
     width: 100%;
     min-height: 100%;
 }
@@ -96,7 +91,6 @@
     /* Override native <dialog> defaults */
     display: block;
     border: none;
-    max-width: none;
     max-height: none;
 
     background-color: var(--modal-dialog-background-color, #fff);
@@ -109,7 +103,6 @@
     padding-bottom: var(--modal-dialog-padding-bottom, 20px);
 
     width: var(--modal-dialog-width, 500px);
-    max-width: 100%;
 
     position: relative;
 }
@@ -168,6 +161,12 @@
     color: var(--modal-close-color-hover, #000);
     background-color: var(--modal-close-background-color-hover, #fff);
     box-shadow: var(--modal-close-box-shadow-hover, 0 0 0 1px #000);
+}
+
+modal-window {
+    & dialog {
+        max-width: 80vw;
+    }
 }
 
 @supports selector(:focus-visible) {

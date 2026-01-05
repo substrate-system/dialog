@@ -3,6 +3,7 @@ body {
     min-height: 200vh;
     max-width: 40rem;
     margin: 0 auto;
+    margin: 1rem;
 
     &.reduce-fouce {
         opacity: 0;
@@ -11,12 +12,6 @@ body {
 
 button {
     cursor: pointer;
-}
-
-/* Edit Profile Modal Styles */
-.edit-profile-modal {
-    --modal-width: 500px;
-    --modal-padding: 0;
 }
 
 .edit-profile-modal .modal-header {

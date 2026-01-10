@@ -14,6 +14,10 @@ button {
     cursor: pointer;
 }
 
+dialog {
+    min-height: 40vh;
+}
+
 .edit-profile-modal .modal-header {
     display: flex;
     align-items: center;

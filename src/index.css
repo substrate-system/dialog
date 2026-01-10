@@ -47,140 +47,146 @@
     }
 }
 
-[data-modal-focus-trap] {
-    opacity: 0;
-    overflow: hidden;
-
-    width: 0;
-    height: 0;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-[data-modal-scroll] {
-    display: none;
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    width: 100%;
-    height: 100%;
-
-    z-index: var(--modal-overlay-z-index, 100000);
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-[data-modal-scroll][data-visible="true"] {
-    display: block;
-}
-
-[data-modal-overlay] {
-    background-color: var(--modal-overlay-background-color, rgba(0, 0, 0, 0.5));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    min-height: 100%;
-}
-
-[data-modal-dialog] {
-    /* Override native <dialog> defaults */
-    display: block;
-    border: none;
-    max-height: none;
-
-    background-color: var(--modal-dialog-background-color, #fff);
-    border-radius: var(--modal-dialog-border-radius, 0);
-    box-shadow: var(--modal-dialog-box-shadow, 0 2px 5px 0 rgba(0, 0, 0, 0.5));
-
-    padding-top: var(--modal-dialog-padding-top, 20px);
-    padding-left: var(--modal-dialog-padding-left, 20px);
-    padding-right: var(--modal-dialog-padding-right, 20px);
-    padding-bottom: var(--modal-dialog-padding-bottom, 20px);
-
-    width: var(--modal-dialog-width, 500px);
-
-    position: relative;
-}
-
-[data-modal-show='true'] [data-modal-overlay] {
-    animation-duration: 250ms;
-    animation-name: SHOW-OVERLAY;
-}
-
-[data-modal-show='true'] [data-modal-dialog] {
-    animation-duration: 250ms;
-    animation-name: SHOW-DIALOG;
-}
-
-[data-modal-hide='true'] [data-modal-overlay] {
-    animation-duration: 250ms;
-    animation-name: HIDE-OVERLAY;
-    opacity: 0;
-}
-
-[data-modal-hide='true'] [data-modal-dialog] {
-    animation-duration: 250ms;
-    animation-name: HIDE-DIALOG;
-    transform: scale(0.95);
-}
-
-[data-modal-close] {
-    appearance: none;
-    touch-action: none;
-    user-select: none;
-
-    border: 0;
-    padding: 0;
-
-    color: var(--modal-close-color, #fff);
-    background-color: var(--modal-close-background-color, #000);
-    border-radius: var(--modal-close-border-radius, 50%);
-    box-shadow: var(--modal-close-box-shadow, 0 0 0 1px #fff);
-    display: var(--modal-close-display, block);
-
-    cursor: pointer;
-    font-family: var(--modal-close-font-family, 'Arial', sans-serif);
-    font-size: var(--modal-close-font-size, 23px);
-    text-align: center;
-
-    line-height: var(--modal-close-line-height, 26px);
-    width: var(--modal-close-width, 26px);
-
-    transform: translate(40%, -40%);
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-[data-modal-close]:hover {
-    color: var(--modal-close-color-hover, #000);
-    background-color: var(--modal-close-background-color-hover, #fff);
-    box-shadow: var(--modal-close-box-shadow-hover, 0 0 0 1px #000);
-}
-
 modal-window {
+    & .modal-focus-trap {
+        opacity: 0;
+        overflow: hidden;
+
+        width: 0;
+        height: 0;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+
+    & .modal-scroll {
+        display: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        width: 100%;
+        height: 100%;
+
+        z-index: var(--modal-overlay-z-index, 100000);
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        &.modal-visible {
+            display: block;
+        }
+
+        &.modal-show .modal-overlay {
+            animation-duration: 250ms;
+            animation-name: SHOW-OVERLAY;
+        }
+
+        &.modal-show .modal-dialog {
+            animation-duration: 250ms;
+            animation-name: SHOW-DIALOG;
+        }
+
+        &.modal-hide .modal-overlay {
+            animation-duration: 250ms;
+            animation-name: HIDE-OVERLAY;
+            opacity: 0;
+        }
+
+        &.modal-hide .modal-dialog {
+            animation-duration: 250ms;
+            animation-name: HIDE-DIALOG;
+            transform: scale(0.95);
+        }
+    }
+
+    & .modal-content {
+        & > h2 {
+            margin-top: 0;
+        }
+    }
+
+    & .modal-overlay {
+        background-color: var(--modal-overlay-background-color, rgba(0, 0, 0, 0.5));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        min-height: 100%;
+    }
+
+    & .modal-dialog {
+        /* Override native <dialog> defaults */
+        display: block;
+        border: none;
+        max-height: none;
+
+        background-color: var(--modal-dialog-background-color, #fff);
+        border-radius: var(--modal-dialog-border-radius, 0);
+        box-shadow: var(--modal-dialog-box-shadow, 0 2px 5px 0 rgba(0, 0, 0, 0.5));
+
+        padding-top: var(--modal-dialog-padding-top, 20px);
+        padding-left: var(--modal-dialog-padding-left, 20px);
+        padding-right: var(--modal-dialog-padding-right, 20px);
+        padding-bottom: var(--modal-dialog-padding-bottom, 20px);
+
+        width: var(--modal-dialog-width, 500px);
+
+        position: relative;
+    }
+
+    & .modal-close {
+        appearance: none;
+        touch-action: none;
+        user-select: none;
+
+        border: 0;
+        padding: 0;
+
+        color: var(--modal-close-color, #fff);
+        background-color: var(--modal-close-background-color, #000);
+        border-radius: var(--modal-close-border-radius, 50%);
+        box-shadow: var(--modal-close-box-shadow, 0 0 0 1px #fff);
+        display: var(--modal-close-display, block);
+
+        cursor: pointer;
+        font-family: var(--modal-close-font-family, 'Arial', sans-serif);
+        font-size: var(--modal-close-font-size, 23px);
+        text-align: center;
+
+        line-height: var(--modal-close-line-height, 26px);
+        width: var(--modal-close-width, 26px);
+
+        transform: translate(40%, -40%);
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        &:hover {
+            color: var(--modal-close-color-hover, #000);
+            background-color: var(--modal-close-background-color-hover, #fff);
+            box-shadow: var(--modal-close-box-shadow-hover, 0 0 0 1px #000);
+        }
+    }
+
     & dialog {
         max-width: 80vw;
     }
-}
 
-@supports selector(:focus-visible) {
-    [data-modal-close]:focus-visible {
-        color: var(--modal-close-color-hover, #000);
-        background-color: var(--modal-close-background-color-hover, #fff);
-        box-shadow: var(--modal-close-box-shadow-hover, 0 0 0 1px #000);
+    @supports selector(:focus-visible) {
+        & .modal-close:focus-visible {
+            color: var(--modal-close-color-hover, #000);
+            background-color: var(--modal-close-background-color-hover, #fff);
+            box-shadow: var(--modal-close-box-shadow-hover, 0 0 0 1px #000);
+        }
     }
-}
 
-@supports not selector(:focus-visible) {
-    [data-modal-close]:focus {
-        color: var(--modal-close-color-hover, #000);
-        background-color: var(--modal-close-background-color-hover, #fff);
-        box-shadow: var(--modal-close-box-shadow-hover, 0 0 0 1px #000);
+    @supports not selector(:focus-visible) {
+        & .modal-close:focus {
+            color: var(--modal-close-color-hover, #000);
+            background-color: var(--modal-close-background-color-hover, #fff);
+            box-shadow: var(--modal-close-box-shadow-hover, 0 0 0 1px #000);
+        }
     }
 }

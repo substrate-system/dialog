@@ -32,9 +32,9 @@ const ARIA_LABEL = 'aria-label'
 const CLOSE = 'close'
 const CLOSE_TITLE = 'Close'
 const NO_ICON = 'no-icon'
-const DATA_HIDE = 'data-modal-hide'
-const DATA_SHOW = 'data-modal-show'
-const DATA_VISIBLE = 'data-visible'
+const CLASS_HIDE = 'modal-hide'
+const CLASS_SHOW = 'modal-show'
+const CLASS_VISIBLE = 'modal-visible'
 const EMPTY_STRING = ''
 const ESCAPE = 'escape'
 const FALSE = 'false'
@@ -111,32 +111,32 @@ export class ModalWindow extends HTMLElement {
         // Create focus trap
         const createFocusTrap = () => {
             const trap = document.createElement('span')
-            trap.setAttribute('data-modal-focus-trap', '')
+            trap.classList.add('modal-focus-trap')
             trap.tabIndex = 0
             return trap
         }
 
         // Create scroll container
         const scroll = document.createElement('div')
-        scroll.setAttribute('data-modal-scroll', '')
+        scroll.classList.add('modal-scroll')
         this._modalScroll = scroll
 
         // Create overlay
         const overlay = document.createElement('div')
-        overlay.setAttribute('data-modal-overlay', '')
+        overlay.classList.add('modal-overlay')
         this._modalOverlay = overlay
 
         // Create dialog
         const dialog = document.createElement('dialog')
         dialog.setAttribute('aria-modal', 'true')
-        dialog.setAttribute('data-modal-dialog', '')
+        dialog.classList.add('modal-dialog')
         dialog.tabIndex = -1
         this._modal = dialog
 
         // Create close button if closable and icon should be shown
         if (this._closable && this._showIcon) {
             const closeBtn = document.createElement('button')
-            closeBtn.setAttribute('data-modal-close', '')
+            closeBtn.classList.add('modal-close')
             closeBtn.type = 'button'
             closeBtn.innerHTML = '&times;'
             dialog.appendChild(closeBtn)
@@ -145,7 +145,7 @@ export class ModalWindow extends HTMLElement {
 
         // Create content wrapper
         const content = document.createElement('div')
-        content.setAttribute('data-modal-content', '')
+        content.classList.add('modal-content')
         this._modalContent = content
 
         // Move content nodes into the content wrapper
@@ -474,7 +474,7 @@ export class ModalWindow extends HTMLElement {
         this.setAttribute(ACTIVE, this._isActive)
 
         // Get booleans.
-        const isModalVisible = this._modalScroll.getAttribute(DATA_VISIBLE) === TRUE
+        const isModalVisible = this._modalScroll.classList.contains(CLASS_VISIBLE)
         const isMotionOkay = this._isMotionOkay()
 
         // Get delay.
@@ -497,7 +497,7 @@ export class ModalWindow extends HTMLElement {
 
         if (this._isActive) {
             // Show modal.
-            this._modalScroll.setAttribute(DATA_VISIBLE, TRUE)
+            this._modalScroll.classList.add(CLASS_VISIBLE)
 
             // Hide scrollbar.
             document.documentElement.style.overflow = HIDDEN
@@ -510,7 +510,7 @@ export class ModalWindow extends HTMLElement {
             // Set flag.
             if (isMotionOkay) {
                 this._isHideShow = true
-                this._modalScroll.setAttribute(DATA_SHOW, TRUE)
+                this._modalScroll.classList.add(CLASS_SHOW)
             }
 
             // Fire callback.
@@ -523,13 +523,13 @@ export class ModalWindow extends HTMLElement {
 
                 // Remove flag.
                 this._isHideShow = false
-                this._modalScroll?.removeAttribute(DATA_SHOW)
+                this._modalScroll?.classList.remove(CLASS_SHOW)
             }, delay)
         } else if (isModalVisible) {
             // Set flag.
             if (isMotionOkay) {
                 this._isHideShow = true
-                this._modalScroll.setAttribute(DATA_HIDE, TRUE)
+                this._modalScroll.classList.add(CLASS_HIDE)
             }
 
             // Fire callback?
@@ -542,10 +542,10 @@ export class ModalWindow extends HTMLElement {
 
                 // Remove flag.
                 this._isHideShow = false
-                this._modalScroll?.removeAttribute(DATA_HIDE)
+                this._modalScroll?.classList.remove(CLASS_HIDE)
 
                 // Hide modal.
-                this._modalScroll?.setAttribute(DATA_VISIBLE, FALSE)
+                this._modalScroll?.classList.remove(CLASS_VISIBLE)
 
                 // Show scrollbar.
                 document.documentElement.style.overflow = EMPTY_STRING

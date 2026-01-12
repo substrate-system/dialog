@@ -293,10 +293,12 @@ export class ModalWindow extends HTMLElement {
         document.addEventListener(KEYDOWN, this._handleKeyDown)
 
         if (this._buttonClose) {
-            this._buttonClose.addEventListener('click', this._handleClickClose)
+            this._buttonClose.addEventListener('click',
+                this._handleClickClose)
         }
         if (this._modalOverlay) {
-            this._modalOverlay.addEventListener('click', this._handleClickOverlay)
+            this._modalOverlay.addEventListener('click',
+                this._handleClickOverlay)
         }
     }
 
@@ -309,10 +311,16 @@ export class ModalWindow extends HTMLElement {
         document.removeEventListener(KEYDOWN, this._handleKeyDown)
 
         if (this._buttonClose) {
-            this._buttonClose.removeEventListener('click', this._handleClickClose)
+            this._buttonClose.removeEventListener(
+                'click',
+                this._handleClickClose
+            )
         }
         if (this._modalOverlay) {
-            this._modalOverlay.removeEventListener('click', this._handleClickOverlay)
+            this._modalOverlay.removeEventListener(
+                'click',
+                this._handleClickOverlay
+            )
         }
     }
 

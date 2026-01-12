@@ -1,6 +1,6 @@
 import { test } from '@substrate-system/tapzero'
 import { assertNoViolations } from '@substrate-system/tapout/axe'
-import { waitFor } from '@substrate-system/dom'
+import { waitFor, click } from '@substrate-system/dom'
 import { ModalWindow } from '../src/index.js'
 
 test('basics', async t => {
@@ -81,10 +81,10 @@ test('clicking backdrop closes modal by default', async t => {
     t.equal(modal.getAttribute('active'), 'true', 'modal should be open')
 
     // Click on the overlay (backdrop)
-    const overlay = modal.querySelector('[data-modal-overlay]') as HTMLElement
+    const overlay = await waitFor('.modal-overlay') as HTMLElement
     t.ok(overlay, 'overlay should exist')
 
-    overlay.click()
+    click(overlay)
 
     // Wait a bit for close
     await new Promise(resolve => setTimeout(resolve, 100))
@@ -107,10 +107,9 @@ test('noclick attribute prevents backdrop from closing modal', async t => {
     t.equal(modal.getAttribute('active'), 'true', 'modal should be open')
 
     // Click on the overlay (backdrop)
-    const overlay = modal.querySelector('[data-modal-overlay]') as HTMLElement
+    const overlay = await waitFor('.modal-overlay') as HTMLElement
     t.ok(overlay, 'overlay should exist')
-
-    overlay.click()
+    click(overlay)
 
     // Wait a bit
     await new Promise(resolve => setTimeout(resolve, 100))

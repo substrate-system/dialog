@@ -13,6 +13,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./css": "./dist/index.css",
     "./*": {
       "import": [
         "./dist/*.js",

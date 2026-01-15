@@ -60,7 +60,7 @@ npm i -S @substrate-system/dialog
 > See [abeautifulsite.net](https://www.abeautifulsite.net/posts/revisiting-fouce).
 >
 
-In the example, we have:
+This is how I do it in the example page:
 
 ```ts
 import { ModalWindow } from '@substrate-system/dialog'
@@ -97,6 +97,22 @@ body {
 ```
 
 ### CSS
+
+#### Import
+
+If you are using a bundler:
+
+```js
+import '@substrate-system/dialog/css'
+```
+
+Or via CSS imports:
+
+```css
+@import url("../node_modules/@substrate-system/dialog/dist/index.css");
+```
+
+#### CSS Variables
 
 Customize the CSS with some variables.
 

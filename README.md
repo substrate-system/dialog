@@ -106,10 +106,11 @@ If you are using a bundler:
 import '@substrate-system/dialog/css'
 ```
 
-Or via CSS imports:
+Or via CSS imports, for example with
+[lightningcss](https://lightningcss.dev/bundling.html):
 
 ```css
-@import url("../node_modules/@substrate-system/dialog/dist/index.css");
+@import url("@substrate-system/dialog/css");
 ```
 
 #### CSS Variables
@@ -130,10 +131,7 @@ Customize the CSS with some variables.
     --modal-dialog-background-color: #fff;
     --modal-dialog-border-radius: 0;
     --modal-dialog-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
-    --modal-dialog-padding-top: 20px;
-    --modal-dialog-padding-left: 20px;
-    --modal-dialog-padding-right: 20px;
-    --modal-dialog-padding-bottom: 20px;
+    --modal-dialog-padding: 1rem;
     --modal-dialog-width: 500px;
 
     /* Close button */

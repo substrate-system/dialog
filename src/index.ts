@@ -1,4 +1,4 @@
-import { define } from '@substrate-system/web-component'
+import { WebComponent, define } from '@substrate-system/web-component'
 
 // for docuement.querySelector
 declare global {
@@ -68,7 +68,7 @@ const FOCUSABLE_SELECTORS = [
 // The component
 // ====================
 
-export class ModalWindow extends HTMLElement {
+export class ModalWindow extends WebComponent.create('modal-window') {
     // Element references (set during build).
     _buttonClose:HTMLButtonElement|null = null
     _modal:HTMLDialogElement|null = null
@@ -103,11 +103,17 @@ export class ModalWindow extends HTMLElement {
         this._bind()
     }
 
+    // for TS, inheritance
+    render () {
+        const contentNodes = Array.from(this.childNodes)
+        return this._buildModal(contentNodes)
+    }
+
     // ============================
     // Helper: build modal structure.
     // ============================
 
-    _buildModal (contentNodes:Node[]) {
+    _buildModal (contentNodes:Node[]):void {
         // Create focus trap
         const createFocusTrap = () => {
             const trap = document.createElement('span')
@@ -181,7 +187,11 @@ export class ModalWindow extends HTMLElement {
     // Lifecycle: attributes changed.
     // ==============================
 
-    attributeChangedCallback (name: string, oldValue: string, newValue: string) {
+    async attributeChangedCallback (
+        name:string,
+        oldValue:string,
+        newValue:string
+    ) {
         // Different old/new values?
         if (oldValue !== newValue) {
             // Changed [active="…"] value?
@@ -674,6 +684,7 @@ export class ModalWindow extends HTMLElement {
                 this._focusElement(this._activeElement)
             }
         })
+        this.emit('close')
     }
 }
 

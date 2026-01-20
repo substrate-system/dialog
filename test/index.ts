@@ -15,6 +15,9 @@ test('basics', async t => {
     t.ok(el, 'should find an element')
     t.ok(el instanceof ModalWindow)
 
+    t.equal(ModalWindow.event('close'), 'modal-window:close',
+        'should return the right namespaced events')
+
     // Test open/close methods
     el.open()
     t.equal(el.getAttribute('active'), 'true', 'should be active after open()')
@@ -150,7 +153,113 @@ test('noclick attribute allows Escape key to close modal', async t => {
         'Escape key should still close modal with noclick attribute')
 })
 
+test('emits close event when close() method is called', async t => {
+    document.body.innerHTML = `
+        <modal-window id="close-event-test" animated="false">
+            <h2>Close Event Test</h2>
+            <p>Test content</p>
+        </modal-window>
+    `
+
+    const modal = await waitFor('modal-window') as ModalWindow
+    let closeEventFired = false
+
+    modal.addEventListener(ModalWindow.event('close'), () => {
+        closeEventFired = true
+    })
+
+    modal.open()
+    await sleep(50)
+
+    modal.close()
+
+    await sleep(10)
+    t.ok(closeEventFired,
+        'close event should be emitted when close() is called')
+})
+
+test('emits close event when clicking backdrop', async t => {
+    document.body.innerHTML = `
+        <modal-window id="close-event-backdrop-test" animated="false">
+            <h2>Close Event Backdrop Test</h2>
+            <p>Test content</p>
+        </modal-window>
+    `
+
+    const modal = await waitFor('modal-window') as ModalWindow
+    let closeEventFired = false
+
+    modal.addEventListener(ModalWindow.event('close'), () => {
+        closeEventFired = true
+    })
+
+    modal.open()
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    const overlay = await waitFor('.modal-overlay') as HTMLElement
+    click(overlay)
+    await new Promise(resolve => setTimeout(resolve, 100))
+
+    t.ok(closeEventFired, 'close event should be emitted when clicking backdrop')
+})
+
+test('emits close event when pressing Escape key', async t => {
+    document.body.innerHTML = `
+        <modal-window id="close-event-escape-test" animated="false">
+            <h2>Close Event Escape Test</h2>
+            <p>Test content</p>
+        </modal-window>
+    `
+
+    const modal = await waitFor('modal-window') as ModalWindow
+    let closeEventFired = false
+
+    modal.addEventListener(ModalWindow.event('close'), () => {
+        closeEventFired = true
+    })
+
+    modal.open()
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    await new Promise(resolve => setTimeout(resolve, 100))
+
+    t.ok(closeEventFired, 'close event should be emitted when pressing Escape')
+})
+
+test('emits close event when clicking close button', async t => {
+    document.body.innerHTML = `
+        <modal-window id="close-event-button-test" animated="false">
+            <h2>Close Event Button Test</h2>
+            <p>Test content</p>
+        </modal-window>
+    `
+
+    const modal = await waitFor('modal-window') as ModalWindow
+    let closeEventFired = false
+
+    modal.addEventListener(ModalWindow.event('close'), () => {
+        closeEventFired = true
+    })
+
+    modal.open()
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    const closeBtn = modal.querySelector('.modal-close') as HTMLButtonElement
+    t.ok(closeBtn, 'close button should exist')
+
+    click(closeBtn)
+    await new Promise(resolve => setTimeout(resolve, 100))
+
+    t.ok(closeEventFired,
+        'close event should be emitted when clicking close button')
+})
+
 test('all done', () => {
     // @ts-expect-error tests
     window.testsFinished = true
 })
+
+function sleep (ms:number):Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}

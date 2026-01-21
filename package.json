@@ -44,6 +44,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@substrate-system/scroll-lock": "^0.0.4",
     "@substrate-system/web-component": "^0.0.38"
   },
   "devDependencies": {

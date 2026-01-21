@@ -1,4 +1,5 @@
 import { WebComponent, define } from '@substrate-system/web-component'
+import { lockBodyScrolling, unlockBodyScrolling } from '@substrate-system/scroll-lock'
 
 // for docuement.querySelector
 declare global {
@@ -35,11 +36,9 @@ const NO_ICON = 'no-icon'
 const CLASS_HIDE = 'modal-hide'
 const CLASS_SHOW = 'modal-show'
 const CLASS_VISIBLE = 'modal-visible'
-const EMPTY_STRING = ''
 const ESCAPE = 'escape'
 const FALSE = 'false'
 const FOCUSIN = 'focusin'
-const HIDDEN = 'hidden'
 const KEYDOWN = 'keydown'
 const MODAL_LABEL_FALLBACK = 'modal'
 const NOCLICK = 'noclick'
@@ -498,9 +497,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         // Get delay.
         const delay = isMotionOkay ? ANIMATION_DURATION : 0
 
-        // Get scrollbar width.
-        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-
         // Get active element.
         const activeElement = document.activeElement as HTMLElement
 
@@ -517,13 +513,8 @@ export class ModalWindow extends WebComponent.create('modal-window') {
             // Show modal.
             this._modalScroll.classList.add(CLASS_VISIBLE)
 
-            // Hide scrollbar.
-            document.documentElement.style.overflow = HIDDEN
-
-            // Add placeholder?
-            if (scrollbarWidth) {
-                document.documentElement.style.paddingRight = `${scrollbarWidth}px`
-            }
+            // Lock body scrolling.
+            lockBodyScrolling(document.body)
 
             // Set flag.
             if (isMotionOkay) {
@@ -565,11 +556,8 @@ export class ModalWindow extends WebComponent.create('modal-window') {
                 // Hide modal.
                 this._modalScroll?.classList.remove(CLASS_VISIBLE)
 
-                // Show scrollbar.
-                document.documentElement.style.overflow = EMPTY_STRING
-
-                // Remove placeholder.
-                document.documentElement.style.paddingRight = EMPTY_STRING
+                // Unlock body scrolling.
+                unlockBodyScrolling(document.body)
 
                 // Delay.
             }, delay)

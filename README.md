@@ -255,19 +255,10 @@ Controls whether open/close animations are used. Set to `"false"` to disable. De
 </modal-window>
 ```
 
-#### `static`
-
-When set to `"true"`, clicking outside the modal does not close it. The Escape key and close button still work (unless `closable="false"`).
-
-```html
-<modal-window static="true">
-    <p>Click outside won't close this</p>
-</modal-window>
-```
-
 #### `noclick`
 
-When present, clicking the backdrop does not close the modal. Unlike `static`, this is a boolean attribute (no value needed). The Escape key and close button still work.
+When present, clicking the backdrop does not close the modal.
+The Escape key and close button still work.
 
 ```html
 <modal-window noclick>

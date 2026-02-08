@@ -1,5 +1,8 @@
 import { WebComponent, define } from '@substrate-system/web-component'
-import { lockBodyScrolling, unlockBodyScrolling } from '@substrate-system/scroll-lock'
+import {
+    lockBodyScrolling,
+    unlockBodyScrolling
+} from '@substrate-system/scroll-lock'
 
 // for docuement.querySelector
 declare global {
@@ -45,7 +48,6 @@ const NOCLICK = 'noclick'
 const PREFERS_REDUCED_MOTION = '(prefers-reduced-motion: reduce)'
 const SPACE = ' '
 const SPACE_REGEX = /\s+/g
-const STATIC = 'static'
 const TAB = 'tab'
 const TRUE = 'true'
 
@@ -86,7 +88,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
     _isAnimated = true
     _isBuilt = false
     _isHideShow = false
-    _isStatic = false
     _timerForHide:number|undefined
     _timerForShow:number|undefined
     _closable:boolean = true
@@ -179,7 +180,7 @@ export class ModalWindow extends WebComponent.create('modal-window') {
     // ============================
 
     static get observedAttributes () {
-        return [ACTIVE, ANIMATED, ARIA_DESCRIBEDBY, CLOSE, STATIC]
+        return [ACTIVE, ANIMATED, ARIA_DESCRIBEDBY, CLOSE]
     }
 
     // ==============================
@@ -193,29 +194,20 @@ export class ModalWindow extends WebComponent.create('modal-window') {
     ) {
         // Different old/new values?
         if (oldValue !== newValue) {
-            // Changed [active="…"] value?
             if (name === ACTIVE) {
                 this._setActiveFlag()
             }
 
-            // Changed [animated="…"] value?
             if (name === ANIMATED) {
                 this._setAnimationFlag()
             }
 
-            // Changed [aria-describedby="…"] value?
             if (name === ARIA_DESCRIBEDBY) {
                 this._setModalDescription()
             }
 
-            // Changed [close="…"] value?
             if (name === CLOSE) {
                 this._setCloseTitle()
-            }
-
-            // Changed [static="…"] value?
-            if (name === STATIC) {
-                this._setStaticFlag()
             }
         }
     }
@@ -251,9 +243,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
 
             // Set modal description.
             this._setModalDescription()
-
-            // Set static flag.
-            this._setStaticFlag()
 
             // Set active flag.
             this._setActiveFlag()
@@ -413,14 +402,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         })
     }
 
-    // ========================
-    // Helper: set static flag.
-    // ========================
-
-    _setStaticFlag () {
-        this._isStatic = this.getAttribute(STATIC) === TRUE
-    }
-
     // ======================
     // Helper: focus element.
     // ======================
@@ -568,8 +549,8 @@ export class ModalWindow extends WebComponent.create('modal-window') {
     // Event: overlay click.
     // =====================
 
-    _handleClickOverlay (event: MouseEvent) {
-        if (this._isHideShow || this._isStatic || this._noClick) return
+    _handleClickOverlay (event:MouseEvent) {
+        if (this._isHideShow || this._noClick) return
         if (!this._closable) return
 
         // Get layer.
@@ -638,7 +619,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         if (
             key === ESCAPE &&
             !this._isHideShow &&
-            !this._isStatic &&
             this._closable
         ) {
             this.close()

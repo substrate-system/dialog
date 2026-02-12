@@ -94,10 +94,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
     _showIcon:boolean = true
     _noClick:boolean = false
 
-    // =======================
-    // Lifecycle: constructor.
-    // =======================
-
     constructor () {
         super()
         this._bind()
@@ -109,18 +105,9 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         return this._buildModal(contentNodes)
     }
 
-    // ============================
-    // Helper: build modal structure.
-    // ============================
-
     _buildModal (contentNodes:Node[]):void {
         // Create focus trap
-        const createFocusTrap = () => {
-            const trap = document.createElement('span')
-            trap.classList.add('modal-focus-trap')
-            trap.tabIndex = 0
-            return trap
-        }
+        createFocusTrap()
 
         // Create scroll container
         const scroll = document.createElement('div')
@@ -174,10 +161,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         // Add to component
         this.appendChild(scroll)
     }
-
-    // ============================
-    // Lifecycle: watch attributes.
-    // ============================
 
     static get observedAttributes () {
         return [ACTIVE, ANIMATED, ARIA_DESCRIBEDBY, CLOSE]
@@ -382,10 +365,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         }
     }
 
-    // ========================
-    // Helper: set active flag.
-    // ========================
-
     _setActiveFlag () {
         // Get flag.
         const isActive = this.getAttribute(ACTIVE) === TRUE
@@ -398,13 +377,11 @@ export class ModalWindow extends WebComponent.create('modal-window') {
             // Focus modal?
             if (this._isActive) {
                 this._focusModal()
+            } else {
+                unlockBodyScrolling(document.body)
             }
         })
     }
-
-    // ======================
-    // Helper: focus element.
-    // ======================
 
     _focusElement (element: HTMLElement) {
         window.requestAnimationFrame(() => {
@@ -429,12 +406,7 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         })
     }
 
-    // =============================
-    // Helper: detect outside modal.
-    // =============================
-
-    _isOutsideModal (element?: HTMLElement) {
-        // Early exit.
+    _isOutsideModal (element?:HTMLElement):boolean {
         if (!this._isActive || !element || !this._modal) {
             return false
         }
@@ -442,36 +414,26 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         // Has element?
         const hasElement = this.contains(element) || this._modal.contains(element)
 
-        // Get boolean.
         const bool = !hasElement
-
-        // Expose boolean.
         return bool
     }
 
     // ===========================
     // Helper: detect motion pref.
     // ===========================
-
-    _isMotionOkay () {
+    _isMotionOkay ():boolean {
         // Get pref.
         const { matches } = window.matchMedia(PREFERS_REDUCED_MOTION)
 
-        // Expose boolean.
         return this._isAnimated && !matches
     }
 
-    // =====================
-    // Helper: toggle modal.
-    // =====================
-
-    _toggleModalDisplay (callback: () => void) {
+    _toggleModalDisplay (callback:()=>void) {
         if (!this._modalScroll) return
 
         // @ts-expect-error boolean
         this.setAttribute(ACTIVE, this._isActive)
 
-        // Get booleans.
         const isModalVisible = this._modalScroll.classList.contains(CLASS_VISIBLE)
         const isMotionOkay = this._isMotionOkay()
 
@@ -489,7 +451,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         // =============
         // Modal active?
         // =============
-
         if (this._isActive) {
             // Show modal.
             this._modalScroll.classList.add(CLASS_VISIBLE)
@@ -515,8 +476,7 @@ export class ModalWindow extends WebComponent.create('modal-window') {
                 this._isHideShow = false
                 this._modalScroll?.classList.remove(CLASS_SHOW)
             }, delay)
-        } else if (isModalVisible) {
-            // Set flag.
+        } else if (isModalVisible) {  // not active, is visible
             if (isMotionOkay) {
                 this._isHideShow = true
                 this._modalScroll.classList.add(CLASS_HIDE)
@@ -657,3 +617,10 @@ export class ModalWindow extends WebComponent.create('modal-window') {
 }
 
 define(ModalWindow.TAG, ModalWindow)
+
+function createFocusTrap () {
+    const trap = document.createElement('span')
+    trap.classList.add('modal-focus-trap')
+    trap.tabIndex = 0
+    return trap
+}

@@ -295,6 +295,34 @@ Closes the modal and returns focus to the previously focused element.
 modal.close()
 ```
 
+### Events
+
+Follow the pattern in [web-component](https://github.com/substrate-system/web-component#event-namestringstring).
+Events are namespaced with the prefix `modal-window:`. Listen for them by
+calling `ModalWindow.event('name')`.
+
+#### `close`
+
+```ts
+import { ModalWindow } from '@substrate-system/dialog'
+
+const el = document.querySelector('modal-window')
+el.addEventListener(ModalWindow.event('close'), () => {
+    console.log('closed')
+})
+```
+
+#### `open`
+
+```ts
+import { ModalWindow } from '@substrate-system/dialog'
+
+const el = document.querySelector('modal-window')
+el.addEventListener(ModalWindow.event('open'), () => {
+    console.log('is open')
+})
+```
+
 ## Accessibility
 
 Things handled by this library:

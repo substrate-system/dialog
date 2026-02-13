@@ -24,10 +24,6 @@ declare global {
  *   modal.close()
  */
 
-// ==========
-// Constants.
-// ==========
-
 const ACTIVE = 'active'
 const ANIMATED = 'animated'
 const ANIMATION_DURATION = 250
@@ -64,10 +60,6 @@ const FOCUSABLE_SELECTORS = [
     'textarea:not([disabled])',
     'video[controls]',
 ].join(',')
-
-// ====================
-// The component
-// ====================
 
 export class ModalWindow extends WebComponent.create('modal-window') {
     // Element references (set during build).
@@ -175,7 +167,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         oldValue:string,
         newValue:string
     ) {
-        // Different old/new values?
         if (oldValue !== newValue) {
             if (name === ACTIVE) {
                 this._setActiveFlag()
@@ -366,10 +357,7 @@ export class ModalWindow extends WebComponent.create('modal-window') {
     }
 
     _setActiveFlag () {
-        // Get flag.
         const isActive = this.getAttribute(ACTIVE) === TRUE
-
-        // Set flag.
         this._isActive = isActive
 
         // Set display.
@@ -431,8 +419,7 @@ export class ModalWindow extends WebComponent.create('modal-window') {
     _toggleModalDisplay (callback:()=>void) {
         if (!this._modalScroll) return
 
-        // @ts-expect-error boolean
-        this.setAttribute(ACTIVE, this._isActive)
+        this.setAttribute(ACTIVE, '' + this._isActive)
 
         const isModalVisible = this._modalScroll.classList.contains(CLASS_VISIBLE)
         const isMotionOkay = this._isMotionOkay()
@@ -443,14 +430,11 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         // Get active element.
         const activeElement = document.activeElement as HTMLElement
 
-        // Cache active element?
+        // Cache active element
         if (this._isActive && activeElement) {
             this._activeElement = activeElement
         }
 
-        // =============
-        // Modal active?
-        // =============
         if (this._isActive) {
             // Show modal.
             this._modalScroll.classList.add(CLASS_VISIBLE)
@@ -522,10 +506,6 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         }
     }
 
-    // ====================
-    // Event: close button click.
-    // ====================
-
     _handleClickClose () {
         this.close()
     }
@@ -590,20 +570,13 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         }
     }
 
-    // =================
-    // Public: open modal.
-    // =================
-
     open () {
         this._isActive = true
         this._toggleModalDisplay(() => {
             this._focusModal()
+            this.emit('open')
         })
     }
-
-    // =================
-    // Public: close modal.
-    // =================
 
     close () {
         this._isActive = false
@@ -611,8 +584,8 @@ export class ModalWindow extends WebComponent.create('modal-window') {
             if (this._activeElement) {
                 this._focusElement(this._activeElement)
             }
+            this.emit('close')
         })
-        this.emit('close')
     }
 }
 

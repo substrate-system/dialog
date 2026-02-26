@@ -575,6 +575,7 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         this._toggleModalDisplay(() => {
             this._focusModal()
             this.emit('open')
+            this.dispatch('open')
         })
     }
 
@@ -585,6 +586,7 @@ export class ModalWindow extends WebComponent.create('modal-window') {
                 this._focusElement(this._activeElement)
             }
             this.emit('close')
+            this.dispatch('close')
         })
     }
 }

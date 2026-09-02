@@ -32,7 +32,9 @@ const ARIA_LABEL = 'aria-label'
 const CLOSE = 'close'
 const CLOSE_TITLE = 'Close'
 const NO_ICON = 'no-icon'
+const CLASS_CLOSED = 'closed'
 const CLASS_HIDE = 'modal-hide'
+const CLASS_OPEN = 'open'
 const CLASS_SHOW = 'modal-show'
 const CLASS_VISIBLE = 'modal-visible'
 const ESCAPE = 'escape'
@@ -421,6 +423,8 @@ export class ModalWindow extends WebComponent.create('modal-window') {
         if (!this._modalScroll) return
 
         this.setAttribute(ACTIVE, '' + this._isActive)
+        this.classList.toggle(CLASS_OPEN, this._isActive)
+        this.classList.toggle(CLASS_CLOSED, !this._isActive)
 
         const isModalVisible = this._modalScroll.classList.contains(CLASS_VISIBLE)
         const isMotionOkay = this._isMotionOkay()

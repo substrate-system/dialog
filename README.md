@@ -37,6 +37,7 @@ See [smashingmagazine.com article](https://www.smashingmagazine.com/2022/04/cta-
   * [Methods](#methods)
     + [`open()`](#open)
     + [`close()`](#close)
+  * [Classes](#classes)
   * [Events](#events)
     + [`close`](#close-1)
     + [`open`](#open)
@@ -307,6 +308,17 @@ Closes the modal and returns focus to the previously focused element.
 
 ```js
 modal.close()
+```
+
+### Classes
+
+The `<modal-window>` element gets a class reflecting its state: `open`
+while the modal is open, and `closed` otherwise.
+
+```css
+modal-window.open {
+    /* styles for the open state */
+}
 ```
 
 ### Events

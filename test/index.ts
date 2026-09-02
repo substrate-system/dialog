@@ -367,6 +367,37 @@ test('host element stays rendered during the close animation', async t => {
         'should not render once the hide animation has finished')
 })
 
+test('host element has an open or closed class', async t => {
+    document.body.innerHTML = `
+        <modal-window id="open-closed-class" animated="false">
+            <h2>Class Test</h2>
+            <p>Test content</p>
+        </modal-window>
+    `
+
+    const modal = await waitFor('modal-window', { visible: false }) as
+        ModalWindow
+    await sleep(50)
+    t.ok(modal.classList.contains('closed'),
+        'should have the closed class before it has been opened')
+    t.ok(!modal.classList.contains('open'),
+        'should not have the open class before it has been opened')
+
+    modal.open()
+    await sleep(50)
+    t.ok(modal.classList.contains('open'),
+        'should have the open class while open')
+    t.ok(!modal.classList.contains('closed'),
+        'should not have the closed class while open')
+
+    modal.close()
+    await sleep(50)
+    t.ok(modal.classList.contains('closed'),
+        'should have the closed class after close()')
+    t.ok(!modal.classList.contains('open'),
+        'should not have the open class after close()')
+})
+
 test('all done', () => {
     // @ts-expect-error tests
     window.testsFinished = true

@@ -38,6 +38,7 @@ const CLASS_VISIBLE = 'modal-visible'
 const ESCAPE = 'escape'
 const FALSE = 'false'
 const FOCUSIN = 'focusin'
+const HIDDEN = 'hidden'
 const KEYDOWN = 'keydown'
 const MODAL_LABEL_FALLBACK = 'modal'
 const NOCLICK = 'noclick'
@@ -437,6 +438,7 @@ export class ModalWindow extends WebComponent.create('modal-window') {
 
         if (this._isActive) {
             // Show modal.
+            this.removeAttribute(HIDDEN)
             this._modalScroll.classList.add(CLASS_VISIBLE)
 
             // Lock body scrolling.
@@ -480,12 +482,16 @@ export class ModalWindow extends WebComponent.create('modal-window') {
 
                 // Hide modal.
                 this._modalScroll?.classList.remove(CLASS_VISIBLE)
+                this.setAttribute(HIDDEN, '')
 
                 // Unlock body scrolling.
                 unlockBodyScrolling(document.body)
 
                 // Delay.
             }, delay)
+        } else {  // not active, not visible
+            // Nothing to animate; make sure the host renders nothing.
+            this.setAttribute(HIDDEN, '')
         }
     }
 

@@ -221,6 +221,11 @@ modal.setAttribute('active', 'false')  // close
 modal.removeAttribute('active')        // close
 ```
 
+While closed, the component sets the `hidden` attribute on the
+`<modal-window>` element, so the host renders nothing. The attribute is
+removed when the modal opens, and added back once the close animation
+has finished.
+
 #### `closable`
 
 Set to `"false"` to prevent the modal from being closed via the close button, Escape key, or clicking outside. You must close it programmatically. Defaults to `true`.

@@ -50,6 +50,13 @@
 }
 
 modal-window {
+    /* Set by the component while closed. Repeated here so that an
+       application rule like `modal-window { display: block }` cannot
+       override the user-agent style for `[hidden]`. */
+    &[hidden] {
+        display: none;
+    }
+
     & .modal-focus-trap {
         opacity: 0;
         overflow: hidden;

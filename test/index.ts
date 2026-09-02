@@ -11,7 +11,7 @@ test('basics', async t => {
         </modal-window>
     `
 
-    const el = await waitFor('modal-window') as ModalWindow
+    const el = await waitFor('modal-window', { visible: false }) as ModalWindow
     t.ok(el, 'should find an element')
     t.ok(el instanceof ModalWindow)
 
@@ -41,7 +41,7 @@ test('accessibility - closed modal', async t => {
         </main>
     `
 
-    await waitFor('modal-window')
+    await waitFor('modal-window', { visible: false })
     await assertNoViolations(t)
 })
 
@@ -59,7 +59,7 @@ test('accessibility - open modal', async t => {
         </main>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     modal.open()
 
     // Wait for modal to fully render
@@ -76,7 +76,7 @@ test('clicking backdrop closes modal by default', async t => {
         </modal-window>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     modal.open()
 
     // Wait for modal to fully render (no animation)
@@ -102,7 +102,7 @@ test('noclick attribute prevents backdrop from closing modal', async t => {
         </modal-window>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     modal.open()
 
     // Wait for modal to fully render (no animation)
@@ -137,7 +137,7 @@ test('noclick attribute allows Escape key to close modal', async t => {
         </modal-window>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     modal.open()
 
     // Wait for modal to fully render (no animation)
@@ -161,7 +161,7 @@ test('emits close event when close() method is called', async t => {
         </modal-window>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     let closeEventFired = false
 
     modal.addEventListener(ModalWindow.event('close'), () => {
@@ -186,7 +186,7 @@ test('emits close event when clicking backdrop', async t => {
         </modal-window>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     let closeEventFired = false
 
     modal.addEventListener(ModalWindow.event('close'), () => {
@@ -211,7 +211,7 @@ test('emits close event when pressing Escape key', async t => {
         </modal-window>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     let closeEventFired = false
 
     modal.addEventListener(ModalWindow.event('close'), () => {
@@ -235,7 +235,7 @@ test('emits close event when clicking close button', async t => {
         </modal-window>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     let closeEventFired = false
 
     modal.addEventListener(ModalWindow.event('close'), () => {
@@ -263,7 +263,7 @@ test('Escape with defaultPrevented does not close modal', async t => {
         </modal-window>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     modal.open()
     await sleep(50)
     t.equal(modal.getAttribute('active'), 'true', 'modal should be open')
@@ -295,7 +295,7 @@ test('keydown event without a key does not throw', async t => {
         </modal-window>
     `
 
-    const modal = await waitFor('modal-window') as ModalWindow
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
     modal.open()
     await sleep(50)
     t.equal(modal.getAttribute('active'), 'true', 'modal should be open')
@@ -318,6 +318,53 @@ test('keydown event without a key does not throw', async t => {
         'a keydown without a key should not throw in the handler')
     t.equal(modal.getAttribute('active'), 'true',
         'modal should remain open')
+})
+
+test('host element is not rendered when closed', async t => {
+    document.body.innerHTML = `
+        <modal-window id="hidden-when-closed" animated="false">
+            <h2>Hidden Test</h2>
+            <p>Test content</p>
+        </modal-window>
+    `
+
+    const modal = await waitFor('modal-window', { visible: false }) as ModalWindow
+    await sleep(50)
+    t.equal(getComputedStyle(modal).display, 'none',
+        'should not render before it has been opened')
+
+    modal.open()
+    await sleep(50)
+    t.notEqual(getComputedStyle(modal).display, 'none',
+        'should render while open')
+
+    modal.close()
+    await sleep(50)
+    t.equal(getComputedStyle(modal).display, 'none',
+        'should not render after close()')
+})
+
+test('host element stays rendered during the close animation', async t => {
+    document.body.innerHTML = `
+        <modal-window id="hidden-after-animation">
+            <h2>Animated Hidden Test</h2>
+            <p>Test content</p>
+        </modal-window>
+    `
+
+    const modal = await waitFor('modal-window', { visible: false }) as
+        ModalWindow
+    modal.open()
+    await sleep(50)
+
+    modal.close()
+    await sleep(50)
+    t.notEqual(getComputedStyle(modal).display, 'none',
+        'should still render while the hide animation is running')
+
+    await sleep(300)
+    t.equal(getComputedStyle(modal).display, 'none',
+        'should not render once the hide animation has finished')
 })
 
 test('all done', () => {
